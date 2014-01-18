@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>introjs</id>
+        <version>0.6.0</version>
+        <title>Intro.js</title>
+        <authors>Afshin Mehrabani</authors>
+        <owners>sirkirby</owners>
+        <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+        <projectUrl>http://usablica.github.io/intro.js/</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Better introductions for websites and features with a step-by-step guide for your projects.</description>
+        <releaseNotes>v0.6.0 source release.
+
+https://github.com/usablica/intro.js/releases</releaseNotes>
+        <tags>intro introjs introduction tutorial guide javascript</tags>
+    </metadata>
+    <files>
+        <file src="introjs-rtl.css" target="content\Content\introjs-rtl.css" />
+        <file src="introjs.css" target="content\Content\introjs.css" />
+        <file src="intro.js" target="content\Scripts\intro.js" />
+    </files>
+</package>
