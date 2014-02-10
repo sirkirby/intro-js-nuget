@@ -1,5 +1,5 @@
 /**
- * Intro.js v0.6.0
+ * Intro.js v0.7.0
  * https://github.com/usablica/intro.js
  * MIT licensed
  *
@@ -19,7 +19,7 @@
   }
 } (this, function (exports) {
   //Default config/variables
-  var VERSION = '0.6.0';
+  var VERSION = '0.7.0';
 
   /**
    * IntroJs main class
@@ -53,7 +53,9 @@
       /* Show tour control buttons? */
       showButtons: true,
       /* Show tour bullets? */
-      showBullets: true
+      showBullets: true,
+      /* Scroll to highlighted element? */
+      scrollToElement: true
     };
   }
 
@@ -74,15 +76,18 @@
       var allIntroSteps = [];
 
       for (var i = 0, stepsLength = this._options.steps.length; i < stepsLength; i++) {
-        var currentItem = this._options.steps[i];
+        var currentItem = _cloneObject(this._options.steps[i]);
         //set the step
-        currentItem.step = i + 1;
+        currentItem.step = introItems.length + 1;
         //use querySelector function only when developer used CSS selector
         if (typeof(currentItem.element) === 'string') {
           //grab the element with given selector from the page
           currentItem.element = document.querySelector(currentItem.element);
         }
-        introItems.push(currentItem);
+
+        if (currentItem.element != null) {
+          introItems.push(currentItem);
+        }
       }
 
     } else {
@@ -103,7 +108,7 @@
             element: currentElement,
             intro: currentElement.getAttribute('data-intro'),
             step: parseInt(currentElement.getAttribute('data-step'), 10),
-	    tooltipClass: currentElement.getAttribute('data-tooltipClass'),
+            tooltipClass: currentElement.getAttribute('data-tooltipClass'),
             position: currentElement.getAttribute('data-position') || this._options.tooltipPosition
           };
         }
@@ -116,7 +121,7 @@
         var currentElement = allIntroSteps[i];
 
         if (currentElement.getAttribute('data-step') == null) {
-          
+
           while (true) {
             if (typeof introItems[nextStep] == 'undefined') {
               break;
@@ -129,7 +134,7 @@
             element: currentElement,
             intro: currentElement.getAttribute('data-intro'),
             step: nextStep + 1,
-	    tooltipClass: currentElement.getAttribute('data-tooltipClass'),
+            tooltipClass: currentElement.getAttribute('data-tooltipClass'),
             position: currentElement.getAttribute('data-position') || this._options.tooltipPosition
           };
         }
@@ -141,7 +146,7 @@
     for (var z = 0; z < introItems.length; z++) {
       introItems[z] && tempIntroItems.push(introItems[z]);  // copy non-empty values to the end of the array
     }
-    
+
     introItems = tempIntroItems;
 
     //Ok, sort all items with given steps
@@ -204,6 +209,21 @@
     return false;
   }
 
+ /*
+   * makes a copy of the object
+   * @api private
+   * @method _cloneObject
+  */
+  function _cloneObject(object) {
+      if (object == null || typeof (object) != 'object' || object.hasOwnProperty("nodeName") === true) {
+          return object;
+      }
+      var temp = {};
+      for (var key in object) {
+          temp[key] = _cloneObject(object[key]);
+      }
+      return temp;
+  }
   /**
    * Go to specific step of introduction
    *
@@ -278,6 +298,10 @@
   function _exitIntro(targetElement) {
     //remove overlay layer from the page
     var overlayLayer = targetElement.querySelector('.introjs-overlay');
+    //return if intro already completed or skipped
+    if (overlayLayer == null) {
+      return;
+    }
     //for fade-out animation
     overlayLayer.style.opacity = 0;
     setTimeout(function () {
@@ -359,7 +383,9 @@
         arrowLayer.className = 'introjs-arrow left';
         break;
       case 'left':
-        tooltipLayer.style.top = '15px';
+        if (this._options.showStepNumbers == true) {  
+          tooltipLayer.style.top = '15px';
+        }
         tooltipLayer.style.right = (_getOffset(targetElement).width + 20) + 'px';
         arrowLayer.className = 'introjs-arrow right';
         break;
@@ -418,7 +444,7 @@
           skipTooltipButton    = oldHelperLayer.querySelector('.introjs-skipbutton'),
           prevTooltipButton    = oldHelperLayer.querySelector('.introjs-prevbutton'),
           nextTooltipButton    = oldHelperLayer.querySelector('.introjs-nextbutton');
-          
+
       //hide the tooltip
       oldtooltipContainer.style.opacity = 0;
 
@@ -449,7 +475,7 @@
         oldtooltipLayer.innerHTML = targetElement.intro;
         //set the tooltip position
         _placeTooltip.call(self, targetElement.element, oldtooltipContainer, oldArrowLayer);
-        
+
         //change active bullet
         oldHelperLayer.querySelector('.introjs-bullets li > a.active').className = '';
         oldHelperLayer.querySelector('.introjs-bullets li > a[data-stepnumber="' + targetElement.step + '"]').className = 'active';
@@ -478,7 +504,7 @@
 
       tooltipTextLayer.className = 'introjs-tooltiptext';
       tooltipTextLayer.innerHTML = targetElement.intro;
-      
+
       bulletsLayer.className = 'introjs-bullets';
 
       if (this._options.showBullets === false) {
@@ -582,11 +608,11 @@
       _placeTooltip.call(self, targetElement.element, tooltipLayer, arrowLayer);
     }
 
-    if (this._currentStep == 0) {
+    if (this._currentStep == 0 && this._introItems.length > 1) {
       prevTooltipButton.className = 'introjs-button introjs-prevbutton introjs-disabled';
       nextTooltipButton.className = 'introjs-button introjs-nextbutton';
       skipTooltipButton.innerHTML = this._options.skipLabel;
-    } else if (this._introItems.length - 1 == this._currentStep) {
+    } else if (this._introItems.length - 1 == this._currentStep || this._introItems.length == 1) {
       skipTooltipButton.innerHTML = this._options.doneLabel;
       prevTooltipButton.className = 'introjs-button introjs-prevbutton';
       nextTooltipButton.className = 'introjs-button introjs-nextbutton introjs-disabled';
@@ -613,14 +639,18 @@
     while (parentElm != null) {
       if (parentElm.tagName.toLowerCase() === 'body') break;
 
+      //fix The Stacking Contenxt problem. 
+      //More detail: https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Understanding_z_index/The_stacking_context
       var zIndex = _getPropValue(parentElm, 'z-index');
-      if (/[0-9]+/.test(zIndex)) {
+      var opacity = parseFloat(_getPropValue(parentElm, 'opacity'));
+      if (/[0-9]+/.test(zIndex) || opacity < 1) {
         parentElm.className += ' introjs-fixParent';
       }
+	  
       parentElm = parentElm.parentNode;
     }
 
-    if (!_elementInViewport(targetElement.element)) {
+    if (!_elementInViewport(targetElement.element) && this._options.scrollToElement === true) {
       var rect = targetElement.element.getBoundingClientRect(),
         winHeight=_getWinSize().height,
         top = rect.bottom - (rect.bottom - rect.top),
@@ -634,6 +664,10 @@
       } else {
         window.scrollBy(0, bottom + 100); // 70px + 30px padding from edge to look nice
       }
+    }
+    
+    if (typeof (this._introAfterChangeCallback) !== 'undefined') {
+        this._introAfterChangeCallback.call(this, targetElement.element);
     }
   }
 
@@ -844,6 +878,14 @@
       _goToStep.call(this, step);
       return this;
     },
+    nextStep: function() {
+      _nextStep.call(this);
+      return this;
+    },
+    previousStep: function() {
+      _previousStep.call(this);
+      return this;
+    },
     exit: function() {
       _exitIntro.call(this, this._targetElement);
     },
@@ -864,6 +906,14 @@
         this._introChangeCallback = providedCallback;
       } else {
         throw new Error('Provided callback for onchange was not a function.');
+      }
+      return this;
+    },
+    onafterchange: function(providedCallback) {
+      if (typeof (providedCallback) === 'function') {
+        this._introAfterChangeCallback = providedCallback;
+      } else {
+        throw new Error('Provided callback for onafterchange was not a function');
       }
       return this;
     },
