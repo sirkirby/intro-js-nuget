@@ -21,12 +21,12 @@ https://www.nuget.org/packages/introjs
 `PM> install-package introjs`
 
 ## ASP.Net Bundling & Minification ##
+```c#
+bundles.Add(new ScriptBundle("~/bundles/introjs").Include("~/Scripts/intro.js"));
 
-    bundles.Add(new ScriptBundle("~/bundles/introjs").Include("~/Scripts/intro.js"));
+bundles.Add(new StyleBundle("~/Content/introjs").Include("~/Content/introjs.css"));
 
-    bundles.Add(new StyleBundle("~/Content/introjs").Include("~/Content/introjs.css"));
-
-	bundles.Add(new StyleBundle("~/Content/introjs-rtl").Include("~/Content/introjs-rtl.css"));
-
+bundles.Add(new StyleBundle("~/Content/introjs-rtl").Include("~/Content/introjs-rtl.css"));
+```
 [License](LICENSE.txt)
 ==================
