@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>introjs</id>
-        <version>0.8.0</version>
+        <version>0.9.0</version>
         <title>Intro.js</title>
         <authors>Afshin Mehrabani</authors>
         <owners>sirkirby</owners>
@@ -17,6 +17,9 @@ https://github.com/usablica/intro.js/releases</releaseNotes>
         <tags>intro introjs introduction tutorial guide javascript</tags>
     </metadata>
     <files>
+        <file src="introjs-nassim.css" target="content\Content\introjs-nassim.css" />
+        <file src="introjs-nazanin.css" target="content\Content\introjs-nazanin.css" />
+        <file src="introjs-royal.css" target="content\Content\introjs-royal.css" />
         <file src="introjs-rtl.css" target="content\Content\introjs-rtl.css" />
         <file src="introjs-rtl.min.css" target="content\Content\introjs-rtl.min.css" />
         <file src="introjs.css" target="content\Content\introjs.css" />
