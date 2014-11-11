@@ -23,13 +23,11 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-clean');
-
   // load the shell plugin for cmd goodies
   grunt.loadNpmTasks('grunt-shell');
-
   // Load the plugin that provides the "nuget" task.
   grunt.loadNpmTasks('grunt-nuget');
-
+  
   // Default task(s).
   grunt.registerTask('default', ['clean', 'shell', 'nugetpack']);
   // Build and publish to nuget task

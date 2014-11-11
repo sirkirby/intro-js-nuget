@@ -1,6 +1,6 @@
 {
   "name": "introjs-nuget",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "Public nuget package for intro.js lib.",
   "author": "Chris Kirby",
   "homepage": "https://www.nuget.org/packages/introjs/",
