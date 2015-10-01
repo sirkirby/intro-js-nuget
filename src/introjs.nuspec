@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>introjs</id>
-        <version>1.0.0</version>
+        <version>1.1.0</version>
         <title>Intro.js</title>
         <authors>Afshin Mehrabani</authors>
         <owners>sirkirby</owners>
@@ -13,7 +13,7 @@
         <description>Better introductions for websites and features with a step-by-step guide for your projects. Package issues? Please  post them here https://github.com/sirkirby/intro-js-nuget/issues</description>
         <releaseNotes>latest source release.
 
-https://github.com/usablica/intro.js/releases/tag/v1.0.0</releaseNotes>
+https://github.com/usablica/intro.js/releases/tag/v1.1.0</releaseNotes>
         <tags>intro introjs introduction tutorial guide javascript</tags>
     </metadata>
     <files>
