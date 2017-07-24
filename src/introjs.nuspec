@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>introjs</id>
-        <version>1.1.1</version>
+        <version>2.5.0</version>
         <title>Intro.js</title>
         <authors>Afshin Mehrabani</authors>
         <owners>sirkirby</owners>
@@ -11,21 +11,24 @@
         <iconUrl>https://raw.githubusercontent.com/sirkirby/intro-js-nuget/master/pkglogo.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Better introductions for websites and features with a step-by-step guide for your projects. Package issues? Please  post them here https://github.com/sirkirby/intro-js-nuget/issues</description>
-        <releaseNotes>latest source release.
+        <releaseNotes>- latest source release
+- *breaking* package structure change
 
-https://github.com/usablica/intro.js/releases/tag/v1.1.1</releaseNotes>
+https://github.com/usablica/intro.js/releases/tag/v2.5.0</releaseNotes>
         <tags>intro introjs introduction tutorial guide javascript</tags>
     </metadata>
     <files>
-        <file src="introjs-dark.css" target="content\Content\introjs-dark.css" />
-        <file src="introjs-nassim.css" target="content\Content\introjs-nassim.css" />
-        <file src="introjs-nazanin.css" target="content\Content\introjs-nazanin.css" />
-        <file src="introjs-royal.css" target="content\Content\introjs-royal.css" />
-        <file src="introjs-rtl.css" target="content\Content\introjs-rtl.css" />
-        <file src="introjs-rtl.min.css" target="content\Content\introjs-rtl.min.css" />
-        <file src="introjs.css" target="content\Content\introjs.css" />
-        <file src="introjs.min.css" target="content\Content\introjs.min.css" />
-        <file src="intro.js" target="content\Scripts\intro.js" />
-        <file src="intro.min.js" target="content\Scripts\intro.min.js" />
+        <file src="themes\introjs-dark.css" target="content\Content\introjs\themes\introjs-dark.css" />
+        <file src="themes\introjs-flattener.css" target="content\Content\introjs\themes\introjs-flattener.css" />
+        <file src="themes\introjs-modern.css" target="content\Content\introjs\themes\introjs-modern.css" />
+        <file src="themes\introjs-nassim.css" target="content\Content\introjs\themes\introjs-nassim.css" />
+        <file src="themes\introjs-nazanin.css" target="content\Content\introjs\themes\introjs-nazanin.css" />
+        <file src="themes\introjs-royal.css" target="content\Content\introjs\themes\introjs-royal.css" />
+        <file src="introjs-rtl.css" target="content\Content\introjs\introjs-rtl.css" />
+        <file src="introjs-rtl.min.css" target="content\Content\introjs\introjs-rtl.min.css" />
+        <file src="introjs.css" target="content\Content\introjs\introjs.css" />
+        <file src="introjs.min.css" target="content\Content\introjs\introjs.min.css" />
+        <file src="intro.js" target="content\Scripts\introjs\intro.js" />
+        <file src="intro.min.js" target="content\Scripts\introjs\intro.min.js" />
     </files>
 </package>
